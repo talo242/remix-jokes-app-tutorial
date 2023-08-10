@@ -18,9 +18,6 @@ export default function JokeSingle() {
     <div>
       <h1>{data.joke.name}</h1>
       <p>{data.joke.content}</p>
-      <p>
-        <a href={data.joke.id}>Joke Permalink</a>
-      </p>
     </div>
   )
 }
