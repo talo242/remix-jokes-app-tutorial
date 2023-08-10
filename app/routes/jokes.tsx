@@ -1,13 +1,29 @@
 import type { LinksFunction } from '@remix-run/node';
-import { Link, Outlet } from '@remix-run/react';
+import { json } from '@remix-run/node'
+import { Link, Outlet, useLoaderData } from '@remix-run/react';
 
 import stylesUrl from '~/styles/jokes.css';
+
+import { db } from '~/utils/db.server';
 
 export const links: LinksFunction = () => [
   {rel: 'stylesheet', href: stylesUrl},
 ];
 
+export const loader = async () => {
+  return json(await db.joke.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+    orderBy: {createdAt: 'desc'},
+    take: 5,
+  }));
+}
+
 export default function JokesRoute() {
+  const data = useLoaderData<typeof loader>();
+
   return (
     <div className="jokes-layout">
       <header className="jokes-header">
@@ -30,9 +46,12 @@ export default function JokesRoute() {
             <Link to=".">Get a random joke</Link>
             <p>Here are a few more jokes to check out:</p>
             <ul>
-              <li>
-                <Link to="some-joke-id">Hippo</Link>
-              </li>
+              {
+                data.map((joke) => (
+                  <li key={joke.id}>
+                    <Link to={joke.id}>{joke.name}</Link>
+                  </li>))
+              }
             </ul>
             <Link to="new" className="button">
               Add your own
