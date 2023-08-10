@@ -10,13 +10,19 @@ export const loader = async () => {
     take: 1,
   });
 
-  return json({randomJoke});
-}
+  return json({ randomJoke });
+};
 export default function JokesIndexRoute() {
-  const {randomJoke} = useLoaderData<typeof loader>();
+  const { randomJoke } = useLoaderData<typeof loader>();
   return (
-    <div><p>Here's a random joke:</p><p>{randomJoke.content}</p><p>
-      <Link to={`/jokes/${randomJoke.id}`}>"{randomJoke.name}" Permalink</Link>
-    </p></div>
-  )
+    <div>
+      <p>Here's a random joke:</p>
+      <p>{randomJoke.content}</p>
+      <p>
+        <Link to={`/jokes/${randomJoke.id}`}>
+          "{randomJoke.name}" Permalink
+        </Link>
+      </p>
+    </div>
+  );
 }

@@ -5,12 +5,12 @@ export default function NewJokeRoute() {
       <form method="post">
         <div>
           <label>
-            Name: <input type="text" name="name"/>
+            Name: <input type="text" name="name" />
           </label>
         </div>
         <div>
           <label>
-            Content: <textarea name="content"/>
+            Content: <textarea name="content" />
           </label>
         </div>
         <div>

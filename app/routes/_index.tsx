@@ -4,7 +4,7 @@ import { Link } from '@remix-run/react';
 import stylesHref from '~/styles/index.css';
 
 export const links: LinksFunction = () => [
-  {rel: 'stylesheet', href: stylesHref},
+  { rel: 'stylesheet', href: stylesHref },
 ];
 
 export default function IndexRoute() {
