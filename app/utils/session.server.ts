@@ -89,3 +89,30 @@ export const createUserSession = async (
     },
   });
 };
+
+export const logout = async (request: Request) => {
+  const session = await getUserSession(request);
+  return redirect('/login', {
+    headers: {
+      'Set-Cookie': await storage.commitSession(session),
+    },
+  });
+};
+
+export const getUser = async (request: Request) => {
+  const userId = await getUserId(request);
+  if (typeof userId !== 'string') {
+    return null;
+  }
+
+  const user = await db.user.findUnique({
+    where: { id: userId },
+    select: { id: true, username: true },
+  });
+
+  if (!user) {
+    throw logout(request);
+  }
+
+  return user;
+};
